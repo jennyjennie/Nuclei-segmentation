@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 
 # Training and testing dataset directory path
-IMAGE_DIR = '../dataset-small2/train'  # DBG
+IMAGE_DIR = '../dataset/train'
 TEST_DIR = '../dataset/test'
 
 
@@ -70,43 +70,27 @@ def get_coco_train():
 
 
 def get_coco_test():
-    test_images_path = []
-    for root, _, files in os.walk(TEST_DIR):
-        image_files = filter_for_jpeg(root, files)
-        test_images_path.append(image_files)
-
-    # Delete a checkpoint image found in nowhere
-    for img_path in test_images_path:
-        if img_path[0].find('checkpoints') != -1:
-            test_images_path.remove(img_path)   
+    json_fp = open('../dataset/test_img_ids.json', 'r')
+    data = json.load(json_fp)
    
     image_id = 1
     coco_test = {
-      "images": [],
+      "images": data,
       "annotations": [],
       "categories": [{"id": 1, "name": "nuclei"}]
     }
-
-    for image_path in test_images_path[0]:
-        image = Image.open(image_path)
-        image_info = create_image_info(
-                image_id, os.path.basename(image_path), image.size)
-        coco_test["images"].append(image_info)
-        image_id += 1
 
     return coco_test
 
 
 # Get train.json
 coco_train = get_coco_train()
-#json_train_file = '../train.json' # DBG to be restored
-json_train_file = '../train_testcode.json' # DBG to be deleted
+json_train_file = '../train.json'
 os.makedirs(os.path.dirname(json_train_file), exist_ok=True)
 json_fp = open(json_train_file, "w")
 json_str = json.dumps(coco_train, indent=4)
 json_fp.write(json_str)
 json_fp.close()
-
 
 # Get test.json
 coco_test = get_coco_test()
