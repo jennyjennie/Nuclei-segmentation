@@ -57,7 +57,7 @@ python tools/train.py ./configs/override_configs/${MY_CONFIGS_FILE}.py
 ```
 
 
-## Test
+## Testing
 
 To test the trained model, run:
 
