@@ -26,7 +26,7 @@ mmdetection
 │    │    │  train.json
 │    │    |  test.json
 │    │
-   └─── images
+     └─── images
 │         │ 
 │         └─── train
 │         |      │  1.png
