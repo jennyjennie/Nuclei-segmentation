@@ -26,10 +26,17 @@ mmdetection
 │    │    │  train.json
 │    │    |  test.json
 │    │
-│    └─── images
-│         │  1.png
-│         |  2.png
-│         |  ...
+   └─── images
+│         │ 
+│         └─── train
+│         |      │  1.png
+│         |      |  2.png
+│         |      |  ...
+│         |
+│         └─── test
+│                │  1.png
+│                |  2.png
+│                |  ...
 │
 └─── config 
 │    └─── override_configs
