@@ -82,3 +82,8 @@ The model achieves the following performance on :
 | ------------------ |---------------- |
 | Mask-rcnn   |     0.23336     |    
 
+## Reference
+
+https://github.com/waspinator/pycococreator.git
+https://github.com/cocodataset/cocoapi
+
