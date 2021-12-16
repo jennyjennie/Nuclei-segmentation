@@ -54,10 +54,8 @@ def get_coco_train():
 
         # filter for associated png annotations
         for mask_img in tqdm(train_masks_path[idx]):
-            category_info = {'id': 1, 'is_crowd':0}
-            binary_mask = np.asarray(Image.open(mask_img)
-                .convert('1')).astype(np.uint8)
-            
+            category_info = {'id': 1, 'is_crowd': 0}
+            binary_mask = np.asarray(Image.open(mask_img).convert('1')).astype(np.uint8)
             annotation_info = create_annotation_info(
                 annotation_id, image_id, category_info, binary_mask,
                 image.size, tolerance=2)
@@ -72,7 +70,7 @@ def get_coco_train():
 def get_coco_test():
     json_fp = open('../dataset/test_img_ids.json', 'r')
     data = json.load(json_fp)
-   
+
     image_id = 1
     coco_test = {
       "images": data,

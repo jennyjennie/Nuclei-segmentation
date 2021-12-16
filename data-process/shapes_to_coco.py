@@ -7,7 +7,7 @@ import re
 import fnmatch
 from PIL import Image
 import numpy as np
-#from pycococreatortools import pycococreatortools
+
 
 ROOT_DIR = 'train'
 IMAGE_DIR = os.path.join(ROOT_DIR, "shapes_train2018")
@@ -48,13 +48,15 @@ CATEGORIES = [
     },
 ]
 
+
 def filter_for_jpeg(root, files):
     file_types = ['*.jpeg', '*.png']
     file_types = r'|'.join([fnmatch.translate(x) for x in file_types])
     files = [os.path.join(root, f) for f in files]
     files = [f for f in files if re.match(file_types, f)]
-    
+
     return files
+
 
 def filter_for_annotations(root, files, image_filename):
     file_types = ['*.png']
@@ -66,6 +68,7 @@ def filter_for_annotations(root, files, image_filename):
     files = [f for f in files if re.match(file_name_prefix, os.path.splitext(os.path.basename(f))[0])]
 
     return files
+
 
 def main():
 
@@ -79,7 +82,7 @@ def main():
 
     image_id = 1
     segmentation_id = 1
-    
+
     # filter for jpeg images
     for root, _, files in os.walk(IMAGE_DIR):
         image_files = filter_for_jpeg(root, files)
@@ -97,13 +100,11 @@ def main():
 
                 # go through each associated annotation
                 for annotation_filename in annotation_files:
-                    
                     print(annotation_filename)
                     class_id = [x['id'] for x in CATEGORIES if x['name'] in annotation_filename][0]
 
                     category_info = {'id': class_id, 'is_crowd': 'crowd' in image_filename}
-                    binary_mask = np.asarray(Image.open(annotation_filename)
-                        .convert('1')).astype(np.uint8)
+                    binary_mask = np.asarray(Image.open(annotation_filename).convert('1')).astype(np.uint8)
                     
                     annotation_info = pycococreatortools.create_annotation_info(
                         segmentation_id, image_id, category_info, binary_mask,
